@@ -8,9 +8,9 @@ export const Home = () => {
 };
 
 export function Title() {
-	return <h1>Doggr</h1>;
+	return <h1>Omify</h1>;
 }
 
 export function Subtitle() {
-	return <h3>Where your pets find love(tm)</h3>;
+	return <h3>Omegle Meets Spotify</h3>;
 }
