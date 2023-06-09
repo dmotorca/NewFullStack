@@ -1,5 +1,5 @@
 import Fastify from "fastify";
-import cors from '@fastify/cors'
+import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import { AuthPlugin } from "./plugins/auth.js";
 import { FastifyBadWordsPlugin } from "./plugins/badwords.js";
@@ -44,6 +44,16 @@ await app.register(cors, {
 	},
 	methods: ['GET','POST','PUT','DELETE','PATCH','SEARCH'],
 });
+
+
+// ***** My Code *****
+await app.register(cors, {
+	origin: "*",
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+	allowedHeaders: '*',
+});
+// ***** My Code *****
+
 
 await app.register(multipart);
 await app.register(FastifyMikroOrmPlugin, config);

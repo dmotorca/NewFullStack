@@ -1,8 +1,11 @@
 {
 	"dependencies": {
 		"@fastify/jwt": "^7.0.0",
+		"cors": "^2.8.5",
 		"dotenv": "^16.1.4",
 		"fastify-plugin": "^4.5.0",
-		"firebase": "^9.22.1"
+		"firebase": "^9.22.1",
+		"socket.io": "^4.6.2",
+		"socket.io-client": "^4.6.2"
 	}
 }
