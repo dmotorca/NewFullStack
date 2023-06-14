@@ -2,9 +2,14 @@ import { httpClient } from "@/Services/HttpClient.tsx";
 import { useState } from "react";
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
 const firebaseConfig = {
-	// your config here
+	apiKey: "AIzaSyD_7xadbCZ244tm0anUpVfGOThiOV6p2GI",
+	authDomain: "omify-9e68d.firebaseapp.com",
+	projectId: "omify-9e68d",
+	storageBucket: "omify-9e68d.appspot.com",
+	messagingSenderId: "644114590431",
+	appId: "1:644114590431:web:57bc46f5024dd97738d76a",
+	measurementId: "G-D1NJEP80JC"
 };
 
 const app = initializeApp(firebaseConfig);

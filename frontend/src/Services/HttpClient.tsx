@@ -20,7 +20,7 @@ export const httpClient = axios.create({
 
 
 // ****** My Changes ******
-export const chatSocket = io(serverUrl);
+//export const chatSocket = io(serverUrl);
 // ****** My Changes ******
 
 export async function getNextProfileFromServer() {

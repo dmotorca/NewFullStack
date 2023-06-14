@@ -157,4 +157,13 @@ export function UserRoutesInit(app: FastifyInstance) {
 		const randomEntity = await userRepo.findOne({}, {offset: randomOffset});
 		reply.send(randomEntity);
 	});
+	
+	
+	
+	app.post("/spotify", async(req, reply) => {
+
+	console.log("Hey this is /spotify")	;
+	});
+	
+	
 }

@@ -69,6 +69,9 @@ await app.register(DoggrRoutes, {});
 
 
 // ***** My Code *****
+
+/*
+
 const io = new SocketIOServer(app.server, {
 	cors: {
 		origin: "*",
@@ -77,13 +80,21 @@ const io = new SocketIOServer(app.server, {
 	}
 });
 
-// ***** My Code IO STUFF *****
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
 	console.log("New client connected");
 	
-	// Handle socket events
-	socket.on("chatMessage", (message) => {
+	// Get EntityManager from Fastify
+	const em = app.db.em;
+	
+	socket.on("chatMessage", async (message) => {
 		console.log("Received chat message:", message);
+		
+		// Persist the chat message
+		const chatMessage = new Message();
+		chatMessage.message = message.content;
+		chatMessage.sender = message.sender;
+		chatMessage.receiver = message.receiver;
+		await em.persistAndFlush(chatMessage);
 		
 		// Broadcast the message to all connected clients
 		io.emit("chatMessage", message);
@@ -94,6 +105,7 @@ io.on("connection", (socket) => {
 	});
 });
 
+ */
 // ***** My Code IO STUFF *****
 
 export default app;
