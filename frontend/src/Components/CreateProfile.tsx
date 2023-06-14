@@ -1,5 +1,14 @@
 import { httpClient } from "@/Services/HttpClient.tsx";
 import { useState } from "react";
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+const firebaseConfig = {
+	// your config here
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export enum SubmissionStatus {
 	NotSubmitted,
@@ -8,44 +17,56 @@ export enum SubmissionStatus {
 }
 
 export const CreateProfile = () => {
-
-	const [selectedFile, setSelectedFile] = useState();
+	const [selectedFile, setSelectedFile] = useState(null);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [petType, setPetType] = useState("");
 	const [submitted, setSubmitted] = useState(SubmissionStatus.NotSubmitted);
-
+	
 	const onFileChange = ev => {
 		setSelectedFile(ev.target.files[0]);
 	};
-
+	
 	const onUploadFile = (ev) => {
 		const formData = new FormData();
-
+		
 		formData.append("name", name);
 		formData.append('email', email);
 		formData.append("password", password);
 		formData.append("petType", petType);
 		formData.append('file', selectedFile);
-
+		
 		// @ts-ignore
 		formData.append("fileName", selectedFile.name);
-
+		
 		const config = {
 			headers: {
 				'content-type': 'multipart/form-data',
 			}
 		};
-
-		httpClient.post("/users", formData, config)
-			.then( (response) => {
-				console.log("Got response from uploading file", response.status);
-				if (response.status === 200) {
-					setSubmitted(SubmissionStatus.SubmitSucceeded);
-				} else {
-					setSubmitted(SubmissionStatus.SubmitFailed);
-				}
+		
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Successfully created user
+				// Now send the remaining data to your own server
+				httpClient.post("/users", formData, config)
+					.then((response) => {
+						console.log("Got response from uploading file", response.status);
+						if (response.status === 200) {
+							setSubmitted(SubmissionStatus.SubmitSucceeded);
+						} else {
+							setSubmitted(SubmissionStatus.SubmitFailed);
+						}
+					})
+					.catch((error) => {
+						console.log('Error in uploading file to your server: ', error);
+						setSubmitted(SubmissionStatus.SubmitFailed);
+					});
+			})
+			.catch((error) => {
+				console.log('Error in creating user on Firebase: ', error);
+				setSubmitted(SubmissionStatus.SubmitFailed);
 			});
 	};
 
