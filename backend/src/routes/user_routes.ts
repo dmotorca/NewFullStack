@@ -160,7 +160,7 @@ export function UserRoutesInit(app: FastifyInstance) {
 	
 	
 	
-	app.post("/spotify", async(req, reply) => {
+	app.get("/spotify", async(req, reply) => {
 
 	console.log("Hey this is /spotify")	;
 	});
