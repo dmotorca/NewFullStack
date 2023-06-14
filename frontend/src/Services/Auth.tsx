@@ -1,6 +1,10 @@
 import { httpClient } from "@/Services/HttpClient.tsx";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 export const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -43,14 +47,15 @@ export const AuthProvider = ({ children }: any) => {
 
 	const [token, setToken] = useState(initialToken);
 	const [userId, setUserId] = useState(initialUserId);
-
+	
 	const handleLogin = async (email: string, password: string) => {
 		console.log("In handleLogin with ", email, password);
-
+		
 		try {
-			const thetoken = await getLoginTokenFromServer(email, password);
+			const auth = getAuth();
+			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+			const thetoken = await userCredential.user?.getIdToken();
 			saveToken(thetoken);
-			await updateAxios(thetoken);
 			// Hooray we're logged in and our token is saved everywhere!
 			navigate(-1);
 			return true;
@@ -60,7 +65,8 @@ export const AuthProvider = ({ children }: any) => {
 			return false;
 		}
 	};
-
+	
+	
 	const handleLogout = () => {
 		setToken(null);
 		localStorage.removeItem("token");
