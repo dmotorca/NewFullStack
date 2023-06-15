@@ -1,28 +1,27 @@
-import SpotifyWebApi from 'spotify-web-api-node';
+import { SpotifyWebApi } from 'spotify-web-api-node';
 
-console.log("POOOPPPPPPPPPPP");
-export const spotifyApi = new SpotifyWebApi({
+// Set necessary parts of the credentials on the constructor
+
+// credentials are optional
+const spotifyApi = new SpotifyWebApi({
   clientId: '20fa9056e1a5420ba5ea71cc673411b1',
   clientSecret: '9905036bc06f4605942007e2a4b3afbc',
-  redirectUri: 'http://localhost:3069',
+  redirectUri: 'http://localhost:5173/spotify'
 });
 
-export function getAuthorizeURL() {
-  return spotifyApi.createAuthorizeURL(['playlist-modify-private', 'user-read-private'], 'YOUR_STATE');
-}
+spotifyApi.setAccessToken('BQB1XU549-TmZ-ku-xyiNMNYdczMfRGBIQofHinRUNLf3N3cvg4xT90Bxg8YgDFfyWIx5AMh2IDTqgjeBmvJmxSwB00fKtXbTPprTyr_MznbZNC9imIjaPmai_G7AgmeNjCvbO4xtOELsCs4aW2DcP2uip2IGjC6RVZxmkfCfbDW3H7Aavt5lj4dpfKgbNiwEBpi0aR-HBR2cRB1hpt53p0iwToiqciYPVi3ife50n9b6cstnaBA9aLINSddWUXO_4floYRJOzWNjI_jl1Su3ZT6W3wtzMpPct_5d_JpQ84T8BJvlFDLdJogN6sqnw');
 
-export function setTokens(code: string) {
-  return spotifyApi.authorizationCodeGrant(code)
-    .then(data => {
-      console.log('The token expires in ' + data.body['expires_in']);
-      console.log('The access token is ' + data.body['access_token']);
-      console.log('The refresh token is ' + data.body['refresh_token']);
-      
-      // Set the access token and refresh token
-      spotifyApi.setAccessToken(data.body['access_token']);
-      spotifyApi.setRefreshToken(data.body['refresh_token']);
-    })
-    .catch(err => {
-      console.log('Something went wrong!', err);
-    });
-}
+spotifyApi.createPlaylist('your_user_id', 'My Shared Playlist', { 'public' : true })
+  .then(function(data) {
+    console.log('Created playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+
+spotifyApi.addTracksToPlaylist('your_playlist_id', ['spotify:track:4iV5W9uYEdYUVa79Axb7Rh'])
+  .then(function(data) {
+    console.log('Added tracks to playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
