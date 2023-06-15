@@ -11,6 +11,9 @@ import { useAuth } from "@/Services/Auth.tsx";
 import { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import "@css/DoggrStyles.css";
+import { Chatroom } from "@/Components/Chat.tsx";
+
+// Inside your DoggrRouter function
 
 
 export function DoggrRouter() {
@@ -28,6 +31,7 @@ export function DoggrRouter() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/logout" element={<Logout />} />
 				<Route path="/spotify" element={<Spotify clientId="your_client_id" redirectUri="your_redirect_uri" />} />
+				<Route path="/chatroom/:id" element={<ProtectedRoute><Chatroom /></ProtectedRoute>} />
 			
 			</Routes>
 		</div>

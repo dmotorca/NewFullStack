@@ -7,7 +7,11 @@ import { FastifyBadWordsPlugin } from "./plugins/badwords.js";
 import { FastifySearchHttpMethodPlugin } from "./plugins/http_search.js";
 import { FastifyMikroOrmPlugin } from "./plugins/mikro.js";
 import DoggrRoutes from "./routes/routes.js";
-// ***** My Code *****
+import { Server } from "http";
+
+// ****import { Server } from "http";
+// import { Server as SocketIOServer } from "socket.io";
+// import Fastify from "fastify";* My Code *****
 import { Server as SocketIOServer} from 'socket.io';
 import { createServer } from 'http';
 // ***** My Code *****
@@ -58,7 +62,33 @@ await app.register(cors, {
 	allowedHeaders: '*',
 });
 // ***** My Code *****
+const server = new Server(app.server);
 
+// Initialize a new Socket.IO server and attach it to the HTTP server.
+const io = new SocketIOServer(server, {
+	cors: {
+		origin: "*", // adjust this to match your CORS needs
+		methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+	},
+});
+
+io.on("connection", (socket) => {
+	console.log("a user connected");
+	
+	socket.on("disconnect", () => {
+		console.log("user disconnected");
+	});
+	
+	// Handle chat event
+	socket.on("chat", (msg) => {
+		// Broadcast the message to all other clients
+		socket.broadcast.emit("chat", msg);
+	});
+});
+
+// After setting up the routes and everything, instead of calling `app.listen()`,
+// you call `server.listen()` to start listening for both HTTP requests and websocket connections.
+server.listen(3000, () => console.log("Server is running on port 3000"));
 
 await app.register(multipart);
 await app.register(FastifyMikroOrmPlugin, config);
@@ -69,43 +99,6 @@ await app.register(DoggrRoutes, {});
 
 
 // ***** My Code *****
-
-/*
-
-const io = new SocketIOServer(app.server, {
-	cors: {
-		origin: "*",
-		methods: ["GET", "POST"],
-		allowedHeaders: "*"
-	}
-});
-
-io.on("connection", async (socket) => {
-	console.log("New client connected");
-	
-	// Get EntityManager from Fastify
-	const em = app.db.em;
-	
-	socket.on("chatMessage", async (message) => {
-		console.log("Received chat message:", message);
-		
-		// Persist the chat message
-		const chatMessage = new Message();
-		chatMessage.message = message.content;
-		chatMessage.sender = message.sender;
-		chatMessage.receiver = message.receiver;
-		await em.persistAndFlush(chatMessage);
-		
-		// Broadcast the message to all connected clients
-		io.emit("chatMessage", message);
-	});
-	
-	socket.on("disconnect", () => {
-		console.log("Client disconnected");
-	});
-});
-
- */
 // ***** My Code IO STUFF *****
 
 export default app;

@@ -31,6 +31,9 @@ dependencies:
   spotify-web-api-node:
     specifier: ^5.0.2
     version: 5.0.2
+  spotify-web-api-ts:
+    specifier: ^1.4.5
+    version: 1.4.5
 
 devDependencies:
   '@types/node':
@@ -923,6 +926,14 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
+  /axios@0.21.4:
+    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
+    dependencies:
+      follow-redirects: 1.15.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: false
@@ -1500,6 +1511,16 @@ packages:
       '@firebase/util': 1.9.3
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /follow-redirects@1.15.2:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /form-data@3.0.1:
@@ -2452,6 +2473,15 @@ packages:
       superagent: 6.1.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /spotify-web-api-ts@1.4.5:
+    resolution: {integrity: sha512-IBX7xQMnLqsJJo+pKRqA3qcATA00W6ZDMIXOKZ3hCFdI380vG36FLNNm2qq62/mKRERQpP1ybp+POMqOjza0Jg==}
+    dependencies:
+      axios: 0.21.4
+      qs: 6.11.0
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /statuses@2.0.1:

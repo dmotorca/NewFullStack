@@ -1,9 +1,10 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 
+console.log("POOOPPPPPPPPPPP");
 export const spotifyApi = new SpotifyWebApi({
   clientId: '20fa9056e1a5420ba5ea71cc673411b1',
   clientSecret: '9905036bc06f4605942007e2a4b3afbc',
-  redirectUri: 'http://localhost:5173/spotify',
+  redirectUri: 'http://localhost:3069',
 });
 
 export function getAuthorizeURL() {

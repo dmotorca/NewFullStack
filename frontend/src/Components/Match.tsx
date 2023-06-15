@@ -5,7 +5,31 @@ import { getNextProfileFromServer } from "@/Services/HttpClient.tsx";
 import { MatchService } from "@/Services/MatchService.tsx";
 import { PassService } from "@/Services/PassService.tsx";
 import { useContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
+
+function YourChatComponent() {
+	useEffect(() => {
+		// Adjust this URL to point to your server
+		const socket = io("http://localhost:5173/match");
+		
+		socket.on("connect", () => {
+			console.log("Connected to server");
+			
+			// Handle incoming chat messages
+			socket.on("chat", (msg) => {
+				// Update your state with the new message
+				console.log("New message: " + msg);
+			});
+		});
+		
+		// Clean up function
+		return () => {
+			socket.disconnect();
+		};
+	}, []);
+	
+}
 export const Match = () => {
 	const [currentProfile, setCurrentProfile] = useState<ProfileType | null>(null);
 	
