@@ -11,3 +11,7 @@ export type ProfileType = {
 	petType: string;
 	id: number;
 };
+
+export type MatchAction = {
+	send: (sender_id: number, receiver_id: number) => Promise<any>;
+};
