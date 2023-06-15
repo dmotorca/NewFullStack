@@ -13,7 +13,6 @@ import { Link, Route, Routes } from "react-router-dom";
 import "@css/DoggrStyles.css";
 import { Chatroom } from "@/Components/Chat.tsx";
 
-// Inside your DoggrRouter function
 
 
 export function DoggrRouter() {

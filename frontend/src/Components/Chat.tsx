@@ -7,8 +7,7 @@ export const Chatroom = () => {
 	const socketRef = useRef<Socket | null>(null);
 	
 	useEffect(() => {
-		// Adjust this URL to point to your server
-		socketRef.current = io("http://localhost:5173/messages");
+		socketRef.current = io("http://localhost:5173/messages"); //URI
 		
 		socketRef.current.on("connect", () => {
 			console.log("Connected to server");
@@ -20,7 +19,6 @@ export const Chatroom = () => {
 			});
 		});
 		
-		// Clean up function
 		return () => {
 			socketRef.current?.disconnect();
 		};
@@ -28,7 +26,6 @@ export const Chatroom = () => {
 	
 	const sendMessage = () => {
 		// Emit the 'chat' event with your message
-		// Replace with your own socket emit code
 		socketRef.current?.emit('chat', message);
 		
 		// Clear the input field
@@ -37,7 +34,7 @@ export const Chatroom = () => {
 	
 	return (
 		<div>
-			<p>Hello, welcome to the chatroom!</p>
+			<p>Chatroom!</p>
 			<input value={message} onChange={(e) => setMessage(e.target.value)} />
 			<button onClick={sendMessage}>Send</button>
 			<ul>

@@ -1,7 +1,8 @@
 import { ProfileType } from "@/DoggrTypes.ts";
 import { useEffect } from "react";
 import "@css/DoggrStyles.css";
-
+import { profileState } from "@/Services/RecoilState.tsx";
+import { useRecoilValue } from "recoil";
 export type ProfileProps = ProfileType & {
 	onLikeButtonClick: () => void;
 	onPassButtonClick: () => void;

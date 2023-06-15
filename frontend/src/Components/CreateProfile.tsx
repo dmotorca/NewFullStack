@@ -98,9 +98,9 @@ export const CreateProfile = () => {
 			</div>
 
 			<div className="flex flex-col w-full mb-5">
-				<label htmlFor="petType" className="text-blue-300 mb-2">Pet Type</label>
+				<label htmlFor="petType" className="text-blue-300 mb-2">Music Prefernece</label>
 				<input
-					placeholder="Dog..."
+					placeholder="Music Pref..."
 					type="text"
 					id="petType"
 					required
