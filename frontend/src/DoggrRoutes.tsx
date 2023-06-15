@@ -31,7 +31,7 @@ export function DoggrRouter() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/logout" element={<Logout />} />
 				<Route path="/spotify" element={<Spotify clientId="your_client_id" redirectUri="your_redirect_uri" />} />
-				<Route path="/chatroom/:id" element={<ProtectedRoute><Chatroom /></ProtectedRoute>} />
+				<Route path="/messages" element={<ProtectedRoute><Chatroom /></ProtectedRoute>} />
 			
 			</Routes>
 		</div>
