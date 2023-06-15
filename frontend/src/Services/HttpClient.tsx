@@ -1,6 +1,10 @@
 import { ProfileType } from "@/DoggrTypes.ts";
 import axios from "axios";
 
+// ****** My Changes ******
+import { io } from "socket.io-client";
+// ****** My Changes ******
+
 const serverIP = import.meta.env.API_HOST;
 const serverPort = import.meta.env.PORT;
 
@@ -13,6 +17,11 @@ export const httpClient = axios.create({
 		"Content-type": "application/json",
 	},
 });
+
+
+// ****** My Changes ******
+//export const chatSocket = io(serverUrl);
+// ****** My Changes ******
 
 export async function getNextProfileFromServer() {
 	const profile =

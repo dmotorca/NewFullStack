@@ -7,6 +7,7 @@ const alphabet = Array.from(Array(26), (v, k) => {
 	return String.fromCharCode(k + 65);
 });
 
+
 export default defineConfig(({ command, mode }) => {
 	return {
 		plugins: [react(), tsconfigPaths()],

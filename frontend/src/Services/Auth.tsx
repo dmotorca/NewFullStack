@@ -1,14 +1,17 @@
 import { httpClient } from "@/Services/HttpClient.tsx";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut, User } from "firebase/auth";
+
 
 export const AuthContext = createContext<AuthContextProps | null>(null);
-
 export type AuthContextProps = {
+	user: User | null;
 	token: string | null;
-	userId: number;
 	handleLogin: (email: string, password: string) => Promise<boolean>;
-	handleLogout: () => void;
+	handleLogout: () => Promise<void>;
 };
 
 const updateAxios = async (token: string) => {
@@ -43,14 +46,17 @@ export const AuthProvider = ({ children }: any) => {
 
 	const [token, setToken] = useState(initialToken);
 	const [userId, setUserId] = useState(initialUserId);
-
+	const [user, setUser] = useState<User | null>(null);
+	
 	const handleLogin = async (email: string, password: string) => {
 		console.log("In handleLogin with ", email, password);
-
+		
 		try {
-			const thetoken = await getLoginTokenFromServer(email, password);
+			const auth = getAuth();
+			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+			const thetoken = await userCredential.user?.getIdToken();
+			setUser(userCredential.user);
 			saveToken(thetoken);
-			await updateAxios(thetoken);
 			// Hooray we're logged in and our token is saved everywhere!
 			navigate(-1);
 			return true;
@@ -60,9 +66,13 @@ export const AuthProvider = ({ children }: any) => {
 			return false;
 		}
 	};
-
-	const handleLogout = () => {
+	
+	
+	const handleLogout = async () => {
+		const auth = getAuth();
+		await signOut(auth);
 		setToken(null);
+		setUserId(null);
 		localStorage.removeItem("token");
 	};
 
@@ -72,12 +82,12 @@ export const AuthProvider = ({ children }: any) => {
 		setUserId(getUserIdFromToken(thetoken));
 		localStorage.setItem("token", JSON.stringify(thetoken));
 	};
-
+	
 	return (
 		<AuthContext.Provider
 			value={{
 				token,
-				userId,
+				user,
 				handleLogin,
 				handleLogout,
 			}}

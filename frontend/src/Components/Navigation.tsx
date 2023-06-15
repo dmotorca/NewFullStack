@@ -11,6 +11,8 @@ export function NavBar() {
 
 					<ul className={"menu menu-horizontal"}>
 						<li><Link to="/">Home</Link></li>
+						<li><Link to="/spotify">Spotify</Link></li>
+						<li><Link to="/messages">Chatroom</Link></li>
 						<li><Link to="/match"> Match</Link></li>
 						{auth?.token != null ? (
 							<li><Link to="/logout">Logout</Link></li>
